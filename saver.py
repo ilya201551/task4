@@ -7,24 +7,21 @@ from abc import abstractmethod, ABC
 class Saver(ABC):
     @staticmethod
     @abstractmethod
-    def save(students_rooms_list: dict):
+    def save(values_list: list, result_name: str):
         pass
 
 
 class JsonSaver:
     @staticmethod
-    def save(students_rooms_list: dict):
-        with open('result.json', 'w') as write_file:
-            json.dump(students_rooms_list, write_file, indent=4)
+    def save(values_list: list, result_name: str):
+        with open('{}.json'.format(result_name), 'w') as write_file:
+            json.dump(values_list, write_file, indent=4)
 
 
 class XmlSaver:
     @staticmethod
-    def save(students_rooms_list: dict):
-        xml = dicttoxml(students_rooms_list)
+    def save(values_list: list, result_name: str):
+        xml = dicttoxml(values_list)
         pretty_xml = parseString(xml).toprettyxml()
-        with open('result.xml', 'w') as write_file:
+        with open('{}.xml'.format(result_name), 'w') as write_file:
             write_file.write(pretty_xml)
-
-
-d

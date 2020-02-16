@@ -1,6 +1,14 @@
 class DBQueries:
     @staticmethod
-    def creating_tables_query():
+    def create_db_query():
+        return 'CREATE DATABASE result'
+
+    @staticmethod
+    def delete_db_query():
+        return 'DROP DATABASE result'
+
+    @staticmethod
+    def create_tables_query():
         return ['''CREATE TABLE Rooms (id INTEGER NOT NULL,
                                        name VARCHAR(30) NOT NULL,
                                        PRIMARY KEY(id))''',
@@ -10,7 +18,13 @@ class DBQueries:
                                           room INTEGER NOT NULL,
                                           sex CHAR(1) NOT NULL,
                                           PRIMARY KEY(id),
-                                          FOREIGN KEY(room) REFERENCES Rooms(id) ON DELETE CASCADE)'''
+                                          FOREIGN KEY(room) REFERENCES Rooms(id) ON DELETE CASCADE)''',
+                ]
+
+    @staticmethod
+    def drop_tables():
+        return ['DROP TABLE Students',
+                'DROP TABLE Rooms',
                 ]
 
     @staticmethod
@@ -31,7 +45,7 @@ class DBQueries:
 
                    'top5_rooms_with_min_avg_age': '''SELECT Rooms.id as room_id,
                                                             Rooms.name as room_name,
-                                                            AVG(TIMESTAMPDIFF(YEAR,Students.birthday,NOW())) as avg_age
+                                                            CAST(AVG(TIMESTAMPDIFF(YEAR,Students.birthday,NOW())) as float) as avg_age
                                                      FROM Rooms JOIN Students ON Rooms.id = Students.room
                                                      GROUP BY Rooms.id
                                                      ORDER BY avg_age
