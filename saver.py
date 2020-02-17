@@ -11,14 +11,14 @@ class Saver(ABC):
         pass
 
 
-class JsonSaver:
+class JsonSaver(Saver):
     @staticmethod
     def save(values_list: list, result_name: str):
         with open('{}.json'.format(result_name), 'w') as write_file:
             json.dump(values_list, write_file, indent=4)
 
 
-class XmlSaver:
+class XmlSaver(Saver):
     @staticmethod
     def save(values_list: list, result_name: str):
         xml = dicttoxml(values_list)
